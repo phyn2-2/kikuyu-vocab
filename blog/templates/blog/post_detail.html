@@ -1,0 +1,56 @@
+{% extends 'blog/base.html' %}
+{% load humanize %}  <!-- for naturaltime, intcomma, etc. -->
+
+{% block content %}
+
+<h1 class="mb-3">{{ post.title }}</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        {% if post.image %}
+            <img src="{{ post.image.url }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
+        {% endif %}
+
+        <p class="text-muted fs-5">
+            <strong>by {{ post.author.username }}</strong> 
+            • {{ post.published_date|naturaltime }}   <!-- "3 hours ago", "yesterday" -->
+            {% if post.published_date|date:"Y-m-d" == "2025-11-19" %}
+                <span class="badge bg-danger">NEW</span>
+            {% endif %}
+        </p>
+
+        <div class="mt-4 fs-4 lh-lg" style="white-space: pre-wrap;">
+            {{ post.content|linebreaks }}
+            <!-- linebreaks = turns \n into <p> and <br> automatically -->
+        </div>
+
+        <hr class="my-5">
+
+        <p class="fw-bold">Tags: <span class="text-primary">{{ post.tags }}</span></p>
+
+        <!-- Author Controls -->
+        {% if user == post.author %}
+            <div class="mt-4">
+                <a href="{% url 'post-edit' post.pk %}" class="btn btn-outline-warning btn-sm">Edit Post</a>
+                <a href="{% url 'post-delete' post.pk %}" class="btn btn-outline-danger btn-sm">Delete</a>
+            </div>
+        {% endif %}
+
+        <!-- Back Button -->
+        <a href="{% url 'post-list' %}" class="btn btn-secondary mt-4">← Back to All Posts</a>
+    </div>
+
+    <div class="col-md-4">
+        <!-- Optional: Author card -->
+        <div class="card">
+            <div class="card-body">
+                <h5>About the Author</h5>
+                <p><strong>{{ post.author.username }}</strong></p>
+                <p>Member since {{ post.author.date_joined|date:"M Y" }}</p>
+                <p>Has written {{ post.author.post_set.count }} post{{ post.author.post_set.count|pluralize }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

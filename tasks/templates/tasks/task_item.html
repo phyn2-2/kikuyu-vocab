@@ -1,0 +1,39 @@
+<div data-id="{{ task.id }}" class="list-group-item list-group-item-action d-flex align-items-center gap-3 shadow-sm rounded-3 mb-3">
+    <!-- Checkbox -->
+    <button 
+        hx-post="{% url 'task-toggle' task.pk %}" 
+        hx-target="closest .list-group-item" 
+        hx-swap="outerHTML"
+        class="btn btn-outline-primary rounded-circle p-2 fs-4">
+        {% if task.completed %}✓{% else %}○{% endif %}
+    </button>
+
+    <!-- Task Content -->
+    <div class="flex-grow-1">
+        <h5 class="{% if task.completed %}text-muted text-decoration-line-through{% endif %} mb-1">
+            {{ task.title }}
+        </h5>
+        <div class="d-flex gap-3 text-muted small">
+            <span class="badge rounded-pill
+                {% if task.priority == 'critical' %}bg-danger
+                {% elif task.priority == 'high' %}bg-warning
+                {% elif task.priority == 'medium' %}bg-info
+                {% else %}bg-success{% endif %}">
+                {{ task.get_priority_display }}
+            </span>
+            {% if task.due_date %}
+                <span>Due {{ task.due_date|date:"M d" }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Delete Button -->
+    <button 
+        hx-post="{% url 'task-delete' task.pk %}" 
+        hx-target="closest .list-group-item" 
+        hx-swap="outerHTML"
+        hx-confirm="Delete this task?"
+        class="btn btn-outline-danger rounded-circle p-2 invisible group-hover:visible">
+        ×
+    </button>
+</div>

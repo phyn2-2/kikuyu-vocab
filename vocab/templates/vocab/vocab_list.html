@@ -1,0 +1,197 @@
+{% extends 'blog/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="display-5 fw-bold text-gradient">My Vocab Vault</h1>
+                    <p class="text-muted">Your personal collection</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'vocab-create' %}" class="btn btn-primary btn-lg shadow">
+                        <i class="fas fa-plus me-2"></i>Add New Word
+                        </a>
+                        <form method="get" action="{% url 'vocab-search' %}" class="d-flex">
+                            <input type="search" name="q" class="form-control me-2" placeholder="Search word..."
+                                                                                    value="{{ request.GET.q }}">
+                            <button type="submit" class="btn btn-outline-primary">
+                                <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white shadow">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="card-title">Total Words</h6>
+                                    <h3 class="mb-0">{{ vocabs.count }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-book fa-2x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white shadow">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="card-title">Kikuyu Words</h6>
+                                    <h3 class="mb-0">{{vocabs|dictsort:"language"|length}}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-language fa-2x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Words Grid -->
+            <div class="row">
+                {% for vocab in vocabs %}
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card h-100 shadow-hover">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span class="badge bg-{{ vocab.language }} text-white">
+                                {{ vocab.language|capfirst}}
+                            </span>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                                                                                 data-bs-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'vocab-detail' vocab.pk %}">
+                                            <i class="fas fa-eye me-2"></i>View
+                                        </a>
+                                    </li>
+                                    {% if user == vocab.user %}
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'vocab-update' vocab.pk %}">
+                                            <i class="fas fa-edit me-2"></i>Edit
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="{% url 'vocab-delete' vocab.pk %}">
+                                            <i class="fas fa-trash me-2"></i>Delete
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ vocab.word }}</h5>
+                            <p class="card-text small">
+                                <em>"{{ vocab.example_sentence|truncatewords:10 }}"</em>
+                            </p>
+                            {% endif %}
+
+                            {% if vocab.tags.all %}
+                            <div class="mb-2">
+                                {% for tag in vocab.tags.all %}
+                                <span class="badge bg-light text-dark me-1 small">{{ tag.name }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{ vocab.created_at|naturaltime }}</small>
+                            <a href="{% url 'vocab-favorite' vocab.pk %}" class="btn btn-sm {% if user in vocab.favorites.all %}btn-warning{% else %}btn-outline-warning{% endif %}">
+                                <i class="fas fa-star"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+                    <h4 class="text-muted">No words yet</h4>
+                    <p class="text-muted">Start building your vocabulary collection!</p>
+                    <a href="{% url 'vocab-create' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Add your First Word
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <div class="row mt-4">
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number}}">Previous</a>
+                            </li>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                            <li class="page-item" {% if page_obj.number == num %}active{% endif %}>
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{page_obj.next_page_number }}">Next</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <style>
+.shadow-hover {
+    transition: all 0.3s ease;
+        border: none;
+}
+.shadow-hover:hover {
+    transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+.text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+}
+.bg-kikuyu { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; }
+.bg-english {background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;}
+.bg-swahili { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important}
+</style>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

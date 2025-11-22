@@ -1,0 +1,58 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    {% if form.instance.pk %}
+        Edit Post
+    {% else %}
+        Create New Post
+    {% endif %}
+</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    <!-- VERY IMPORTANT: enctype for image uploads! -->
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Title</label>
+                        {{ form.title }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Content (Markdown works too if you want later)</label>
+                        {{ form.content }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Tags (comma separated)</label>
+                        {{ form.tags }}
+                        <div class="form-text">e.g. django, python, webdev, tutorial</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Featured Image (optional)</label>
+                        {{ form.image }}
+                        {% if form.instance.image %}
+                            <div class="mt-2">
+                                <img src="{{ form.instance.image.url }}" class="img-thumbnail" width="300">
+                                <p class="text-muted small">Current image ↑</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg">
+                        {% if form.instance.pk %}Update{% else %}Publish{% endif %} Post
+                    </button>
+                    <a href="{% url 'post-list' %}" class="btn btn-outline-secondary btn-lg ms-3">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

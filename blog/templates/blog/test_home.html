@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TEST PAGE - IF YOU SEE THIS, DJANGO WORKS</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 100px; background: #ff0000; color: white; font-size: 50px; }
+    </style>
+</head>
+<body>
+    <h1>VICTORY PAGE - DJANGO IS ALIVE</h1>
+    <h2>Found {{ posts.count }} posts:</h2>
+    {% for post in posts %}
+        <div style="background: black; color: lime; margin: 20px; padding: 20px;">
+            <h3>{{ post.title }}</h3>
+            <p>by {{ post.author }} at {{ post.published_date }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>

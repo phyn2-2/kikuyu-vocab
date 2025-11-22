@@ -1,0 +1,74 @@
+==== Django ====
+
+- Django is a high level python web framework that encourages rapid development and clean, pragmatic design
+
+1.manage.py: command line utility that lets you interact with Django project in various ways
+2.__init__.py: Empty file that tells Python that this directory should be considered a Python package
+3.settings.py: settings/configurations
+4.urls.py: URL declarations 
+5.asgi.py: An Entry point for ASGI-compatible web servers to serve your project
+6.wsgi.py: An Entry point for WSGI-compatible web servers to serve your project
+
+"djang-admin startproject core ." : creates the Django project- the main container for your entire web application
+"python manage.py blog": creates a Django App - modular component within your project.
+
+- models; The foundation of Django's ORM(Object-Relational Mapping).Lets you define database tables as Python classes.
+- User; Django's built-in user model for authentication.We're using it to link vocab(apps) entries to specific users(friends sign up/login)
+- reverse; Used to generate URLs from view names instead of hardcoding them.Makes your app more maintainable
+    i) class Vocab(models.Model): -> Creates database table called vocab_vocab (Django auto-names tables as appname_modelname)
+    ii)    LANGUAGE_CHOICES = [
+        ('kikuyu', 'Kikuyu'),
+        ('english', 'English'),
+        ('swahili', 'Swahili'),
+    ] -> Why a choices list? Provides dropdown options in forms/admin interface, Format: ('database_value', 'human_readable_label'), restricts input, prevents errors
+
+    iii) user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vocabs') -> ForeignKey - Many-to-one relationship,one user can have many vocab entries, on_delete=models.CASCADE - if a user gets deleted, All their vocab entries get deleted too, related_name='vocabs' - lets you do user.vocabs.all() to get all vocab entries for a user
+
+    iv)     word = models.CharField(max_length=100)
+    translation = models.CharField(max_length=100)
+    language = models.CharField(max_length=20, choices=LANGUAGE_CHOICES, default='kikuyu')  -> CharField- for short text,requires max_length(Db efficiency), choices=LANGUAGE_CHOICES-Restricts input to only the predefined languages, default- if no language is specified defaults to kikuyu 
+    
+    v)     example_sentence = models.TextField(blank=True)
+    audio = models.FileField(upload_to='vocab_audio/', blank=True, null=True)
+    image = models.ImageField(upload_to='vocab_images/', blank=True, null=True)    -> TextField-for longer text content, no max_length needed, blank=True-Field can be empty in forms, null=True-Field can be null in db, upload_to-Files get saved to media/vocab_audio
+
+    vi)     tags = models.ManyToManyField('Tag', blank=True)
+    favorites = models.ManyToManyField(User, related_name='favorite_vocabs', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)    -> tags-Many-To-Many with Tag model,one vocab can have multiple tags, one tab can be on multiple vocabs, favorites-Many-to-many with user.Muliple users can favorite multiple vocab entries, auto_now_add-Automatically set to current datetime when object is first created
+
+    vii)     class Meta:
+        ordering = ['-created_at']    -> Meta class-Django's ways of adding model-level options,ordering = ['-created_at']-Default ordering:newest entries first (hyphen = descending) sort newest first
+
+
+- from django import forms  -> Django forms module,handles HTML form creation and validation
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if commit:
+            instance.save()
+            tag_names = [t.strip() for t in self.cleaned_data['tags'].split(',') if t.strip()]
+            for tag_name in tag_names:
+                tag, created = Tag.objects.get_or_create(name=tag_name)
+                instance.tags.add(tag)
+        return instance   ->  Step 1: instance = super().save(commit=False)
+
+Calls the parent ModelForm's save method but with commit=False
+
+This creates a Vocab instance in memory but doesn't save to database yet
+
+Why? So we can modify it before saving
+
+Step 2: if commit:
+
+Only proceed if we're actually saving to database
+
+commit=True is the default, but sometimes you might call save(commit=False) to get an unsaved instance
+
+Step 3: instance.save()
+
+Now actually save the Vocab instance to database
+
+This creates the primary key (id) needed for many-to-many relationships
+
+- for tag_name in tag_names:
+    tag, created = Tag.objects.get_or_create(name=tag_name)
+    instance.tags.add(tag)  -> get_or_create()- Genius Django method, if tag exists:returns existing tag, if tag doesnt exist creates it and returns new tag; created-Boolean telling you if it ws created useful for logging; instance.tags.add(tag)-Adds the tag to the vocabs ManyToMany relationship

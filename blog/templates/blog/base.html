@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Django Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/main.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">MyBlog</a>
+            <a href="{% url 'task-list' %}" class="text-light mx-4 hover:text-white">Tasks</a>
+            <div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'post-create' %}" class="btn btn-primary">New Post</a>
+                    <span class="text-light mx-3">Hello {{ user.username }}</span>
+                    <a href="/admin/" class="btn btn-secondary">Admin</a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
+                {% else %}
+                    <a href="/admin/" class="btn btn-outline-success">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
