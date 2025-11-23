@@ -9,3 +9,15 @@ textarea, input[type="text"], input[type="file"] {
 input[type="file"] {
     padding: 3px;
 }
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.3s;
+}
+
+.group-hover\:visible {
+    visibility: hidden;
+}
+
+.list-group-item:hover .group-hover\:visible {
+    visibility: visible;
+}

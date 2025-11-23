@@ -20,6 +20,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
+# Customize admin AFTER Django loads
+admin.site.site_header = "DOMINIUM // CONTROL INTERFACE"
+admin.site.site_title = "DOMINIUM Admin"
+admin.site.index_title = "System Control Panel"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),

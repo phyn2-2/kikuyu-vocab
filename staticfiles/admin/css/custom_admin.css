@@ -1,0 +1,388 @@
+/*======================================
+  DOMINIUM ADMIN INTERFACE - GOTHIC THEME
+========================================= */
+
+/* TYPOGRAPHY & BASE COLORS */
+@import url('https://fonts.googleapis.com/css2?family=family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root {
+    --color-blood: #ff0000;
+    --color-blood-dark: #c40000;
+    --color-blood-darker: #8b0000;
+    --color-void: #000000
+    --color-void-light: #050000;
+    --color-void-lighter: #0d0000;
+    --color-void-surface: #150000;
+    --glow-blood: 0 0 10px var(--color-blood);
+    --glow-blood-intense: 0 0 20px var(--color-blood);
+    --transition-speed: 0.2s;
+}
+* {
+  transition: all var(--transition-speed) ease-in-out;
+}
+
+body,
+html {
+    background: var(--color-void) !important;
+    color: var(--color-blood-dark) !important;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    margin: 0;
+    padding: 0;
+}
+
+/* BRANDING & HEADER */
+.dominium-branding {
+    padding: 15px 20px;
+    background: var(--color-void-light);
+    border-bottom: 2px solid var(--color-blood);
+}
+
+.dominium-title,
+.dominium-title a {
+    color: var(--color-blood) !important;
+    letter-spacing: 3px;
+    font-size: 26;
+    font-weight: 700;
+    text-shadow: var(--glow-blood);
+    text-transform: uppercase;
+    text-decoration: none;
+    margin: 0;
+}
+
+.dominium-title a:hover {
+    text-shadow: var(--glow-blood-intense);
+    letter-spacing: 4px;
+}
+
+#site-name a {
+    text-decoration: none;
+}
+
+/* NAVIGATION & LINKS */
+a {
+    color: var(--color-blood) !important;
+    text-decoration: none;
+    transition: all var(--transition-speed) ease-in-out;
+}
+
+a:hover {
+    text-shadow: var(--glow-blood);
+    color: var(--color-blood) !important;
+}
+
+/* SIDEBAR & MODULES */
+#content-main,
+.module,
+.colM,
+.colSM {
+    background: transparent !important;
+}
+
+.module h2,
+.module caption,
+#changelist-filter h2 {
+    background: var(--color-void-surface) !important;
+    border-left: 3px solid var(--color-blood) !important;
+    color: var(--color-blood) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+}
+
+.module h3 {
+    color: var(--color-blood-dark) !important;
+    background: var(--color-void-lighter) !important;
+}
+
+/* TABLES */
+table {
+    background: transparent !important;
+    border-collapse: collapse;
+}
+
+thread th {
+    background: var(--color-void-surfacec) !important;
+    color: var(--color-blood) !important;
+    border-bottom: 2px solid var(--color-blood) !important;
+    text-transform: uppercase;
+    text-shadow: var(--glow-blood);
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 12px 10px;
+}
+
+tbody tr {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+}
+
+tbody tr:hover {
+    background: rgba(255, 0, 0, 0.2) !important;
+}
+
+td,
+th {
+    color: var(--color-blood-dark) !important;
+    border-right: 1px solid rgba(255, 0, 0, 0.1);
+    padding: 10px;
+}
+
+/* FORMS & INPUTS */
+input,
+select,
+textarea,
+.vTextField,
+.vDateField,
+.vTimeField {
+    background: var(--color-void-lighter) !important;
+    border: 1px solid var(--color-blood) !important;
+    color: var(--color-blood) !important;
+    box-shadow: none !important;
+    padding: 8px 12px;
+    font-family: "JetBrains Mono", monospace;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color: var(--color-blood-darker) !important;
+    opacity: 0.6;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none !important;
+    box-shadow: var(--glow-blood) !important;
+    border-color: var(--color-blood) !important;
+    background: var(--color-void-light);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--color-blood);
+    cursor: pointer;
+}
+
+.form-row {
+    margin-bottom: 15px;
+}
+
+label {
+    color: var(--color-blood-dark) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.required::after {
+    content: " *";
+    color: var(--color-blood);
+    text-shadow: var(--glow-blood);
+}
+
+/* BUTTONS */
+button,
+.button,
+input[type="submit"],
+.submit-row input,
+a.button {
+    background: var(--color-void-lighter) !important;
+    border: 1px solid var(--color-blood) !important;
+    color: var(--color-blood) !important;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    font-family: "JetBrains Mono", monospace;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease-in-out;
+}
+
+button:hover,
+.button:hover,
+input[type="submit"]:hover {
+    background: var(--color-blood) !important;
+    color: var(--color-void) !important;
+    box-shadow: var(--glow-blood-intense) !important;
+    transform: translateY(-2px);
+}
+
+button:active,
+.button:active,
+input[type="submit"]:active {
+    transform: translateY(0);
+}
+
+.default {
+    background: var(--color-blood-darker) !important;
+}
+
+/* DELETE BUTTON */
+.deletelink,
+.delete-box a {
+    background: var(--color-blood-darker) !important;
+    border-color: var(--color-blood) !important;
+}
+
+/* LOGIN PAGE */
+.dominium-login-container {
+    width: 420px;
+    max-width: 90%;
+    margin: 100px auto;
+    padding: 40px;
+    background: var(--color-void-light);
+    border: 2px solid var(--color-blood);
+    box-shadow: var(--glow-blood-intense);
+    border-radius: 2px;
+}
+
+.dominium-login-header {
+    margin-bottom: 30px;
+}
+
+.access-gate-title {
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--color-blood) !important;
+    text-shadow: 0 0 15px var(--color-blood);
+    letter-spacing: 3px;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+}
+
+.dominium-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.password-reset-link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 12px;
+}
+
+.password-reset-link a {
+    color: var(--color-blood-dark) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ERROR MESSAGES */
+.errornote,
+.error,
+ul.errorlist {
+    background: var(--color-blood-darker) !important;
+    border: 1px solid var(--color-blood) !important;
+    color: #fff !important;
+    padding: 10px 15px;
+    margin: 15px 0;
+    text-shadow: none;
+    list-style: none;
+}
+
+ul.errorlist li {
+    color: #fff !important;
+}
+
+.error {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* SUCCESS MESSAGES */
+.success,
+.messagelist .success {
+    background: rgba(0, 255, 0, 0.1) !important;
+    border: 1px solid #00ff00 !important;
+    color: #00ff00 !important;
+}
+
+/* PAGINATION */
+.paginator {
+    color: var(--color-blood-dark) !important;
+}
+
+.paginator a {
+    border: 1px solid var(--color-blood);
+    padding: 5px 10px;
+    margin: 0 2px;
+}
+
+.paginator a:hover {
+    background: var(--color-blood) !important;
+    color: var(--color-void) !important;
+}
+
+/*  BREADCRUMBS */
+.breadcrumbs {
+    background: var(--color-void-lighter) !important;
+    border-bottom: 1px solid var(--color-blood);
+    padding: 10px 20px;
+}
+
+.breadcrumbs a {
+    color: var(--color-blood-dark) !important;
+}
+/* USER TOOLS */
+#user-tools {
+    color: var(--color-blood-dark) !important;
+    text-align: right;
+    padding: 10px 20px;
+}
+
+#user-tools a {
+    color: var(--color-blood) !important;
+}
+
+/* OBJECT TOOLS */
+.object-tools {
+    background: transparent !important;
+}
+
+.object-tools li a {
+    background: var(--color-void-lighter) !important;
+    border: 1px solid var(--color-blood) !important;
+}
+
+.object-tools li a:hover {
+    background: var(--color-blood) !important;
+    color: var(--color-void) !important;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-void-lighter);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-blood);
+    box-shadow: var(--glow-blood);
+}
+
+/* LOADING INDICATOR */
+.loading {
+    color: var(--color-blood) !important;
+    text-shadow: var(--glow-blood);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .dominium-login-container {
+        margin: 50px auto;
+        padding: 30px 20px;
+    }
+
+    .dominium-title {
+        font-size: 20px;
+    }
+}
+
