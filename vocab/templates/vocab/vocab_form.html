@@ -1,0 +1,251 @@
+{% extends 'vocab/base.html' %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <!-- Back Button -->
+        <div class="back-nav">
+            <a href="{% if is_edit %}{% url 'vocab-detail' object.pk %}{% else %}{% url 'vocab-list' %}{% endif %}" class="back-link">
+                ← Cancel
+            </a>
+        </div>
+
+        <!-- Form Header -->
+        <div class="form-header">
+            <h1 class="form-title">{{ form_title }}</h1>
+            <p class="form-subtitle">
+                {% if is_edit %}
+                    Update the word details below. Changes will be reviewed by an admin.
+                {% else %}
+                    Contribute a new Kikuyu word. Your submission will be reviewed before appearing publicly.
+                {% endif %}
+            </p>
+        </div>
+
+        <!-- Form -->
+        <form method="POST" enctype="multipart/form-data" class="vocab-form">
+            {% csrf_token %}
+
+            <!-- Display form errors -->
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {% for error in form.non_field_errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Form Sections -->
+            <div class="form-section">
+                <h2 class="form-section-title">📝 Basic Information</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.word.id_for_label }}" class="form-label">
+                            {{ form.word.label }} <span class="required">*</span>
+                        </label>
+                        {{ form.word }}
+                        {% if form.word.errors %}
+                            <div class="field-errors">
+                                {% for error in form.word.errors %}
+                                    <p class="error">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if form.word.help_text %}
+                            <p class="help-text">{{ form.word.help_text }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.translation.id_for_label }}" class="form-label">
+                            {{ form.translation.label }} <span class="required">*</span>
+                        </label>
+                        {{ form.translation }}
+                        {% if form.translation.errors %}
+                            <div class="field-errors">
+                                {% for error in form.translation.errors %}
+                                    <p class="error">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.language.id_for_label }}" class="form-label">
+                            {{ form.language.label }} <span class="required">*</span>
+                        </label>
+                        {{ form.language }}
+                        {% if form.language.errors %}
+                            <div class="field-errors">
+                                {% for error in form.language.errors %}
+                                    <p class="error">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.category.id_for_label }}" class="form-label">
+                            {{ form.category.label }} <span class="required">*</span>
+                        </label>
+                        {{ form.category }}
+                        {% if form.category.errors %}
+                            <div class="field-errors">
+                                {% for error in form.category.errors %}
+                                    <p class="error">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.difficulty.id_for_label }}" class="form-label">
+                            {{ form.difficulty.label }}
+                        </label>
+                        {{ form.difficulty }}
+                        {% if form.difficulty.errors %}
+                            <div class="field-errors">
+                                {% for error in form.difficulty.errors %}
+                                    <p class="error">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.pronunciation_guide.id_for_label }}" class="form-label">
+                        {{ form.pronunciation_guide.label }}
+                    </label>
+                    {{ form.pronunciation_guide }}
+                    {% if form.pronunciation_guide.help_text %}
+                        <p class="help-text">{{ form.pronunciation_guide.help_text }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Examples Section -->
+            <div class="form-section">
+                <h2 class="form-section-title">💬 Examples & Context</h2>
+
+                <div class="form-group">
+                    <label for="{{ form.example_sentence.id_for_label }}" class="form-label">
+                        {{ form.example_sentence.label }}
+                    </label>
+                    {{ form.example_sentence }}
+                    {% if form.example_sentence.errors %}
+                        <div class="field-errors">
+                            {% for error in form.example_sentence.errors %}
+                                <p class="error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.example_translation.id_for_label }}" class="form-label">
+                        {{ form.example_translation.label }}
+                    </label>
+                    {{ form.example_translation }}
+                    {% if form.example_translation.errors %}
+                        <div class="field-errors">
+                            {% for error in form.example_translation.errors %}
+                                <p class="error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.notes.id_for_label }}" class="form-label">
+                        {{ form.notes.label }}
+                    </label>
+                    {{ form.notes }}
+                    {% if form.notes.help_text %}
+                        <p class="help-text">{{ form.notes.help_text }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <div class="form-section">
+                <h2 class="form-section-title">🎵 Media Files</h2>
+
+                <div class="form-group">
+                    <label for="{{ form.audio.id_for_label }}" class="form-label">
+                        {{ form.audio.label }}
+                    </label>
+                    {{ form.audio }}
+                    {% if form.audio.errors %}
+                        <div class="field-errors">
+                            {% for error in form.audio.errors %}
+                                <p class="error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.audio.help_text %}
+                        <p class="help-text">{{ form.audio.help_text }}</p>
+                    {% endif %}
+                    {% if is_edit and object.audio %}
+                        <div class="current-file">
+                            <p>Current audio: <a href="{{ object.audio.url }}" target="_blank">Listen</a></p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.image.id_for_label }}" class="form-label">
+                        {{ form.image.label }}
+                    </label>
+                    {{ form.image }}
+                    {% if form.image.errors %}
+                        <div class="field-errors">
+                            {% for error in form.image.errors %}
+                                <p class="error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.image.help_text %}
+                        <p class="help-text">{{ form.image.help_text }}</p>
+                    {% endif %}
+                    {% if is_edit and object.image %}
+                        <div class="current-file">
+                            <img src="{{ object.image.url }}" alt="Current image" class="current-image-preview">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Tags Section -->
+            <div class="form-section">
+                <h2 class="form-section-title">🏷️ Tags</h2>
+
+                <div class="form-group">
+                    <label for="{{ form.tag_input.id_for_label }}" class="form-label">
+                        {{ form.tag_input.label }}
+                    </label>
+                    {{ form.tag_input }}
+                    {% if form.tag_input.help_text %}
+                        <p class="help-text">{{ form.tag_input.help_text }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-large">
+                    {{ submit_text }}
+                </button>
+                <a href="{% if is_edit %}{% url 'vocab-detail' object.pk %}{% else %}{% url 'vocab-list' %}{% endif %}" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

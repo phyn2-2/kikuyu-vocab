@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Kikuyu Vocabulary Platform{% endblock %} | DOMINIUM</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'vocab/vocab.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="{% url 'vocab-list' %}" class="logo">
+                    <span class="logo-icon">📚</span>
+                    <span class="logo-text">KIKUYU VOCAB</span>
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <a href="{% url 'vocab-list' %}" class="nav-link {% if request.resolver_match.url_name == 'vocab-list' %}active{% endif %}">
+                    Browse
+                </a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'my-vocab' %}" class="nav-link {% if request.resolver_match.url_name == 'my-vocab' %}active{% endif %}">
+                        My Words
+                    </a>
+                    <a href="{% url 'vocab-create' %}" class="nav-link btn-primary">
+                        + Add Word
+                    </a>
+                    <div class="nav-user">
+                        <span class="user-greeting">Hello, {{ user.username }}</span>
+                        {% if user.is_staff %}
+                            <a href="{% url 'admin:index' %}" class="nav-link" target="_blank">Admin</a>
+                        {% endif %}
+                        <a href="/blog/logout/" class="nav-link">Logout</a>
+                    </div>
+                {% else %}
+                    <a href="/blog/login/" class="nav-link">Login</a>
+                {% endif %}
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    <span class="alert-icon">
+                        {% if message.tags == 'success' %}✅{% endif %}
+                        {% if message.tags == 'error' %}❌{% endif %}
+                        {% if message.tags == 'warning' %}⚠️{% endif %}
+                        {% if message.tags == 'info' %}ℹ️{% endif %}
+                    </span>
+                    {{ message }}
+                    <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>KIKUYU VOCAB</h3>
+                    <p>Collaborative platform for preserving and teaching the Kikuyu language.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{% url 'vocab-list' %}">Browse Words</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'vocab-create' %}">Contribute</a></li>
+                            <li><a href="{% url 'my-vocab' %}">My Contributions</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Statistics</h4>
+                    <p>{{ total_words|default:0 }} words and growing</p>
+                    <p>Built with 💜 by the community</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 DOMINIUM Platform. Preserving language, one word at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenuToggle.classList.toggle('active');
+            });
+        }
+
+        // Auto-hide messages after 5 seconds
+        document.addEventListener('DOMContentLoaded', () => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 300);
+                }, 5000);
+            });
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,236 @@
+{% extends 'vocab/base.html' %}
+
+{% block title %}{{ vocab.word }} - {{ vocab.translation }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="vocab-detail-container">
+        <!-- Back Button -->
+        <div class="back-nav">
+            <a href="{% url 'vocab-list' %}" class="back-link">← Back to Browse</a>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="vocab-detail-main">
+            <!-- Left Column: Word Info -->
+            <div class="vocab-detail-content">
+                <!-- Status Badge (for contributors viewing their own) -->
+                {% if vocab.user == user and vocab.status != 'approved' %}
+                    <div class="status-banner status-{{ vocab.status }}">
+                        {% if vocab.status == 'pending' %}
+                            ⏳ This word is pending admin review
+                        {% elif vocab.status == 'rejected' %}
+                            ❌ This word was rejected: {{ vocab.rejection_reason }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <!-- Header -->
+                <div class="vocab-header">
+                    <div class="vocab-title-section">
+                        <h1 class="vocab-word-large">{{ vocab.word }}</h1>
+                        <p class="vocab-translation-large">{{ vocab.translation }}</p>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="vocab-actions">
+                        {% if user.is_authenticated %}
+                            <!-- Favorite Button -->
+                            <button
+                                class="btn-icon favorite-btn {% if is_favorited %}favorited{% endif %}"
+                                onclick="toggleFavorite({{ vocab.pk }})"
+                                id="favoriteBtn"
+                            >
+                                <span class="favorite-icon">{% if is_favorited %}❤️{% else %}🤍{% endif %}</span>
+                                <span id="favoriteCount">{{ vocab.favorite_count }}</span>
+                            </button>
+
+                            <!-- Edit/Delete (if owner) -->
+                            {% if is_owner %}
+                                <a href="{% url 'vocab-edit' vocab.pk %}" class="btn btn-secondary">✏️ Edit</a>
+                                <a href="{% url 'vocab-delete' vocab.pk %}" class="btn btn-danger">🗑️ Delete</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Meta Info -->
+                <div class="vocab-meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">Category</span>
+                        <span class="meta-value">{{ vocab.category.icon }} {{ vocab.category.name }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Difficulty</span>
+                        <span class="meta-value badge-{{ vocab.difficulty }}">{{ vocab.difficulty|title }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Views</span>
+                        <span class="meta-value">👁️ {{ vocab.view_count }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Contributor</span>
+                        <span class="meta-value">👤 {{ vocab.user.username }}</span>
+                    </div>
+                </div>
+
+                <!-- Pronunciation Guide -->
+                {% if vocab.pronunciation_guide %}
+                    <div class="info-section">
+                        <h3 class="section-title">🗣️ Pronunciation</h3>
+                        <p class="pronunciation-text">{{ vocab.pronunciation_guide }}</p>
+                    </div>
+                {% endif %}
+
+                <!-- Audio Player -->
+                {% if vocab.audio %}
+                    <div class="info-section">
+                        <h3 class="section-title">🎵 Audio Pronunciation</h3>
+                        <div class="audio-player-container">
+                            <audio controls class="audio-player">
+                                <source src="{{ vocab.audio.url }}" type="audio/mpeg">
+                                Your browser does not support audio playback.
+                            </audio>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Example Sentences -->
+                {% if vocab.example_sentence %}
+                    <div class="info-section">
+                        <h3 class="section-title">💬 Example Usage</h3>
+                        <div class="example-box">
+                            <p class="example-native">{{ vocab.example_sentence }}</p>
+                            {% if vocab.example_translation %}
+                                <p class="example-english">{{ vocab.example_translation }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Additional Notes -->
+                {% if vocab.notes %}
+                    <div class="info-section">
+                        <h3 class="section-title">📝 Additional Notes</h3>
+                        <p class="notes-text">{{ vocab.notes }}</p>
+                    </div>
+                {% endif %}
+
+                <!-- Tags -->
+                {% if vocab.tags.all %}
+                    <div class="info-section">
+                        <h3 class="section-title">🏷️ Tags</h3>
+                        <div class="tag-list">
+                            {% for tag in vocab.tags.all %}
+                                <span class="tag">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Comments Section -->
+                <div class="comments-section">
+                    <h3 class="section-title">💬 Comments ({{ comments.count }})</h3>
+
+                    <!-- Add Comment Form -->
+                    {% if user.is_authenticated %}
+                        <form method="POST" action="{% url 'add-comment' vocab.pk %}" class="comment-form">
+                            {% csrf_token %}
+                            <textarea
+                                name="content"
+                                placeholder="Share your thoughts, ask questions, or add context..."
+                                rows="3"
+                                class="comment-textarea"
+                                required
+                            ></textarea>
+                            <button type="submit" class="btn btn-primary">Post Comment</button>
+                        </form>
+                    {% else %}
+                        <p class="login-prompt">
+                            <a href="/blog/login/?next={{ request.path }}">Login</a> to add a comment
+                        </p>
+                    {% endif %}
+
+                    <!-- Comments List -->
+                    {% if comments %}
+                        <div class="comments-list">
+                            {% for comment in comments %}
+                                <div class="comment">
+                                    <div class="comment-header">
+                                        <span class="comment-author">{{ comment.user.username }}</span>
+                                        <span class="comment-date">{{ comment.created_at|timesince }} ago</span>
+                                    </div>
+                                    <p class="comment-content">{{ comment.content }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="no-comments">No comments yet. Be the first to comment!</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Sidebar: Image & Related -->
+            <div class="vocab-detail-sidebar">
+                <!-- Image -->
+                {% if vocab.image %}
+                    <div class="image-section">
+                        <img src="{{ vocab.image.url }}" alt="{{ vocab.word }}" class="vocab-image-large">
+                    </div>
+                {% endif %}
+
+                <!-- Related Words -->
+                {% if related_words %}
+                    <div class="related-section">
+                        <h3 class="section-title">Related Words</h3>
+                        <div class="related-words-list">
+                            {% for related in related_words %}
+                                <a href="{% url 'vocab-detail' related.pk %}" class="related-word-card">
+                                    <strong>{{ related.word }}</strong>
+                                    <span>{{ related.translation }}</span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Favorite toggle with AJAX
+function toggleFavorite(vocabId) {
+    fetch(`/vocab/${vocabId}/favorite/`, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update button
+            const btn = document.getElementById('favoriteBtn');
+            const icon = btn.querySelector('.favorite-icon');
+            const count = document.getElementById('favoriteCount');
+
+            if (data.is_favorited) {
+                btn.classList.add('favorited');
+                icon.textContent = '❤️';
+            } else {
+                btn.classList.remove('favorited');
+                icon.textContent = '🤍';
+            }
+
+            count.textContent = data.favorite_count;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Fallback: reload page
+        window.location.reload();
+    });
+}
+</script>
+{% endblock %}

@@ -1,197 +1,190 @@
-{% extends 'blog/base.html' %}
-{% load humanize %}
+{% extends 'vocab/base.html' %}
+
+{% block title %}Browse Kikuyu Words{% endblock %}
 
 {% block content %}
-<div class="container-fluid py-4">
-    <!-- Header Section -->
-    <div class="row mb-5">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h1 class="display-5 fw-bold text-gradient">My Vocab Vault</h1>
-                    <p class="text-muted">Your personal collection</p>
-                </div>
-                <div class="d-flex gap-2">
-                    <a href="{% url 'vocab-create' %}" class="btn btn-primary btn-lg shadow">
-                        <i class="fas fa-plus me-2"></i>Add New Word
-                        </a>
-                        <form method="get" action="{% url 'vocab-search' %}" class="d-flex">
-                            <input type="search" name="q" class="form-control me-2" placeholder="Search word..."
-                                                                                    value="{{ request.GET.q }}">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="fas fa-search"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+<div class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">Kikuyu Vocabulary</h1>
+        <p class="hero-subtitle">Discover and learn {{ total_words }} Kikuyu words with audio pronunciations</p>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Search & Filter Section -->
+    <div class="search-filter-section">
+        <!-- Search Bar -->
+        <form method="GET" action="{% url 'vocab-list' %}" class="search-form">
+            <div class="search-input-group">
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Search by Kikuyu word or English translation..."
+                    value="{{ search_query }}"
+                    class="search-input"
+                    autofocus
+                >
+                <button type="submit" class="search-btn">
+                    🔍 Search
+                </button>
             </div>
+        </form>
 
-            <!-- Stats Cards -->
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="card bg-primary text-white shadow">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <h6 class="card-title">Total Words</h6>
-                                    <h3 class="mb-0">{{ vocabs.count }}</h3>
-                                </div>
-                                <div class="align-self-center">
-                                    <i class="fas fa-book fa-2x opacity-50"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-success text-white shadow">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <h6 class="card-title">Kikuyu Words</h6>
-                                    <h3 class="mb-0">{{vocabs|dictsort:"language"|length}}</h3>
-                                </div>
-                                <div class="align-self-center">
-                                    <i class="fas fa-language fa-2x opacity-50"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Filters -->
+        <div class="filters">
+            <form method="GET" action="{% url 'vocab-list' %}" class="filter-form">
+                <!-- Preserve search query -->
+                {% if search_query %}
+                    <input type="hidden" name="q" value="{{ search_query }}">
+                {% endif %}
+
+                <!-- Category Filter -->
+                <select name="category" class="filter-select" onchange="this.form.submit()">
+                    <option value="">All Categories</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.slug }}" {% if active_category == cat.slug %}selected{% endif %}>
+                            {{ cat.icon }} {{ cat.name }} ({{ cat.word_count }})
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <!-- Difficulty Filter -->
+                <select name="difficulty" class="filter-select" onchange="this.form.submit()">
+                    <option value="">All Levels</option>
+                    <option value="beginner" {% if active_difficulty == 'beginner' %}selected{% endif %}>Beginner</option>
+                    <option value="intermediate" {% if active_difficulty == 'intermediate' %}selected{% endif %}>Intermediate</option>
+                    <option value="advanced" {% if active_difficulty == 'advanced' %}selected{% endif %}>Advanced</option>
+                </select>
+
+                <!-- Sort Options -->
+                <select name="sort" class="filter-select" onchange="this.form.submit()">
+                    <option value="-created_at" {% if active_sort == '-created_at' %}selected{% endif %}>Newest First</option>
+                    <option value="oldest" {% if active_sort == 'oldest' %}selected{% endif %}>Oldest First</option>
+                    <option value="alphabetical" {% if active_sort == 'alphabetical' %}selected{% endif %}>Alphabetical</option>
+                    <option value="popular" {% if active_sort == 'popular' %}selected{% endif %}>Most Popular</option>
+                </select>
+
+                <!-- Clear Filters -->
+                {% if search_query or active_category or active_difficulty or active_sort != '-created_at' %}
+                    <a href="{% url 'vocab-list' %}" class="clear-filters">Clear Filters</a>
+                {% endif %}
+            </form>
+        </div>
+
+        <!-- Active Filters Display -->
+        {% if search_query or active_category or active_difficulty %}
+            <div class="active-filters">
+                <span class="filter-label">Filters:</span>
+                {% if search_query %}
+                    <span class="filter-tag">Search: "{{ search_query }}"</span>
+                {% endif %}
+                {% if active_category %}
+                    <span class="filter-tag">Category: {{ active_category }}</span>
+                {% endif %}
+                {% if active_difficulty %}
+                    <span class="filter-tag">Level: {{ active_difficulty|title }}</span>
+                {% endif %}
             </div>
+        {% endif %}
+    </div>
 
+    <!-- Results Count -->
+    <div class="results-info">
+        <p>Showing <strong>{{ page_obj.paginator.count }}</strong> word{{ page_obj.paginator.count|pluralize }}</p>
+    </div>
 
-            <!-- Words Grid -->
-            <div class="row">
-                {% for vocab in vocabs %}
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card h-100 shadow-hover">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <span class="badge bg-{{ vocab.language }} text-white">
-                                {{ vocab.language|capfirst}}
-                            </span>
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
-                                                                                                 data-bs-toggle="dropdown">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="{% url 'vocab-detail' vocab.pk %}">
-                                            <i class="fas fa-eye me-2"></i>View
-                                        </a>
-                                    </li>
-                                    {% if user == vocab.user %}
-                                    <li>
-                                        <a class="dropdown-item" href="{% url 'vocab-update' vocab.pk %}">
-                                            <i class="fas fa-edit me-2"></i>Edit
-                                        </a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <a class="dropdown-item text-danger" href="{% url 'vocab-delete' vocab.pk %}">
-                                            <i class="fas fa-trash me-2"></i>Delete
-                                        </a>
-                                    </li>
-                                    {% endif %}
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ vocab.word }}</h5>
-                            <p class="card-text small">
-                                <em>"{{ vocab.example_sentence|truncatewords:10 }}"</em>
-                            </p>
+    <!-- Vocabulary Grid -->
+    {% if vocabs %}
+        <div class="vocab-grid">
+            {% for vocab in vocabs %}
+                <div class="vocab-card">
+                    <a href="{% url 'vocab-detail' vocab.pk %}" class="vocab-card-link">
+                        <!-- Image or Placeholder -->
+                        <div class="vocab-card-image">
+                            {% if vocab.image %}
+                                <img src="{{ vocab.image.url }}" alt="{{ vocab.word }}">
+                            {% else %}
+                                <div class="vocab-card-placeholder">
+                                    <span class="placeholder-icon">📝</span>
+                                </div>
                             {% endif %}
 
+                            <!-- Badges -->
+                            <div class="vocab-card-badges">
+                                <span class="badge badge-category">{{ vocab.category.icon }} {{ vocab.category.name }}</span>
+                                <span class="badge badge-difficulty badge-{{ vocab.difficulty }}">{{ vocab.difficulty }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="vocab-card-content">
+                            <h3 class="vocab-word">{{ vocab.word }}</h3>
+                            <p class="vocab-translation">{{ vocab.translation }}</p>
+
+                            {% if vocab.pronunciation_guide %}
+                                <p class="vocab-pronunciation">🗣️ {{ vocab.pronunciation_guide }}</p>
+                            {% endif %}
+
+                            <!-- Metadata -->
+                            <div class="vocab-card-meta">
+                                {% if vocab.audio %}
+                                    <span class="meta-icon" title="Has audio">🎵</span>
+                                {% endif %}
+                                <span class="meta-text">👁️ {{ vocab.view_count }}</span>
+                                <span class="meta-text">❤️ {{ vocab.favorite_count }}</span>
+                            </div>
+
+                            <!-- Tags -->
                             {% if vocab.tags.all %}
-                            <div class="mb-2">
-                                {% for tag in vocab.tags.all %}
-                                <span class="badge bg-light text-dark me-1 small">{{ tag.name }}</span>
-                                {% endfor %}
-                            </div>
+                                <div class="vocab-tags">
+                                    {% for tag in vocab.tags.all|slice:":3" %}
+                                        <span class="tag">{{ tag.name }}</span>
+                                    {% endfor %}
+                                </div>
                             {% endif %}
                         </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">{{ vocab.created_at|naturaltime }}</small>
-                            <a href="{% url 'vocab-favorite' vocab.pk %}" class="btn btn-sm {% if user in vocab.favorites.all %}btn-warning{% else %}btn-outline-warning{% endif %}">
-                                <i class="fas fa-star"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-12">
-                <div class="text-center py-5">
-                    <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
-                    <h4 class="text-muted">No words yet</h4>
-                    <p class="text-muted">Start building your vocabulary collection!</p>
-                    <a href="{% url 'vocab-create' %}" class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>Add your First Word
                     </a>
                 </div>
-            </div>
             {% endfor %}
         </div>
 
         <!-- Pagination -->
-        {% if is_paginated %}
-        <div class="row mt-4">
-            <div class="col-12">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number}}">Previous</a>
-                            </li>
-                            {% endif %}
+        {% if page_obj.has_other_pages %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}{% if active_category %}&category={{ active_category }}{% endif %}{% if active_difficulty %}&difficulty={{ active_difficulty }}{% endif %}{% if active_sort %}&sort={{ active_sort }}{% endif %}" class="page-link">
+                        « First
+                    </a>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if active_category %}&category={{ active_category }}{% endif %}{% if active_difficulty %}&difficulty={{ active_difficulty }}{% endif %}{% if active_sort %}&sort={{ active_sort }}{% endif %}" class="page-link">
+                        ‹ Previous
+                    </a>
+                {% endif %}
 
-                            {% for num in page_obj.paginator.page_range %}
-                            <li class="page-item" {% if page_obj.number == num %}active{% endif %}>
-                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-                            </li>
-                            {% endfor %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
 
-                            {% if page_obj.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{page_obj.next_page_number }}">Next</a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                </div>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if active_category %}&category={{ active_category }}{% endif %}{% if active_difficulty %}&difficulty={{ active_difficulty }}{% endif %}{% if active_sort %}&sort={{ active_sort }}{% endif %}" class="page-link">
+                        Next ›
+                    </a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}{% if active_category %}&category={{ active_category }}{% endif %}{% if active_difficulty %}&difficulty={{ active_difficulty }}{% endif %}{% if active_sort %}&sort={{ active_sort }}{% endif %}" class="page-link">
+                        Last »
+                    </a>
+                {% endif %}
             </div>
+        {% endif %}
+
+    {% else %}
+        <!-- Empty State -->
+        <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <h2>No words found</h2>
+            <p>Try adjusting your search or filters</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'vocab-create' %}" class="btn btn-primary">Be the first to add a word!</a>
             {% endif %}
         </div>
-
-        <style>
-.shadow-hover {
-    transition: all 0.3s ease;
-        border: none;
-}
-.shadow-hover:hover {
-    transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
-}
-.text-gradient {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-}
-.bg-kikuyu { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; }
-.bg-english {background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;}
-.bg-swahili { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important}
-</style>
+    {% endif %}
+</div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-

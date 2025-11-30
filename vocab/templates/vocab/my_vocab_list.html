@@ -1,0 +1,99 @@
+{% extends 'vocab/base.html' %}
+
+{% block title %}My Contributions{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="dashboard-header">
+        <h1>My Contributions</h1>
+        <a href="{% url 'vocab-create' %}" class="btn btn-primary">+ Add New Word</a>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">{{ stats.total }}</div>
+            <div class="stat-label">Total Words</div>
+        </div>
+        <div class="stat-card stat-pending">
+            <div class="stat-number">{{ stats.pending }}</div>
+            <div class="stat-label">⏳ Pending Review</div>
+        </div>
+        <div class="stat-card stat-approved">
+            <div class="stat-number">{{ stats.approved }}</div>
+            <div class="stat-label">✅ Approved</div>
+        </div>
+        <div class="stat-card stat-rejected">
+            <div class="stat-number">{{ stats.rejected }}</div>
+            <div class="stat-label">❌ Rejected</div>
+        </div>
+    </div>
+
+    <!-- Words List -->
+    {% if vocabs %}
+        <div class="my-vocab-list">
+            {% for vocab in vocabs %}
+                <div class="my-vocab-item status-{{ vocab.status }}">
+                    <div class="my-vocab-content">
+                        <div class="my-vocab-header">
+                            <h3>
+                                <a href="{% url 'vocab-detail' vocab.pk %}">{{ vocab.word }}</a>
+                            </h3>
+                            <span class="status-badge status-{{ vocab.status }}">
+                                {% if vocab.status == 'pending' %}⏳ Pending
+                                {% elif vocab.status == 'approved' %}✅ Approved
+                                {% elif vocab.status == 'rejected' %}❌ Rejected
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <p class="my-vocab-translation">{{ vocab.translation }}</p>
+
+                        {% if vocab.status == 'rejected' and vocab.rejection_reason %}
+                            <p class="rejection-reason">
+                                <strong>Rejection reason:</strong> {{ vocab.rejection_reason }}
+                            </p>
+                        {% endif %}
+
+                        <div class="my-vocab-meta">
+                            <span>{{ vocab.category.name }}</span>
+                            <span>•</span>
+                            <span>Created {{ vocab.created_at|timesince }} ago</span>
+                            {% if vocab.status == 'approved' %}
+                                <span>•</span>
+                                <span>👁️ {{ vocab.view_count }} views</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="my-vocab-actions">
+                        <a href="{% url 'vocab-detail' vocab.pk %}" class="btn btn-sm btn-secondary">View</a>
+                        <a href="{% url 'vocab-edit' vocab.pk %}" class="btn btn-sm btn-secondary">Edit</a>
+                        <a href="{% url 'vocab-delete' vocab.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link">‹ Previous</a>
+                {% endif %}
+                <span class="page-current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="page-link">Next ›</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">📝</div>
+            <h2>No contributions yet</h2>
+            <p>Start contributing to help preserve the Kikuyu language!</p>
+            <a href="{% url 'vocab-create' %}" class="btn btn-primary">Add Your First Word</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

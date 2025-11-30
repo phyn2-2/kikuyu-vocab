@@ -1,0 +1,33 @@
+{% extends 'vocab/base.html' %}
+
+{% block title %}Delete {{ vocab.word }}?{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="delete-confirmation">
+        <div class="warning-icon">⚠️</div>
+        <h1 class="delete-title">Delete this word?</h1>
+
+        <div class="delete-word-info">
+            <h2>{{ vocab.word }}</h2>
+            <p>{{ vocab.translation }}</p>
+        </div>
+
+        <p class="delete-warning">
+            This action cannot be undone. The word and all associated files (audio, image) will be permanently deleted.
+        </p>
+
+        <form method="POST" class="delete-form">
+            {% csrf_token %}
+            <div class="delete-actions">
+                <button type="submit" class="btn btn-danger btn-large">
+                    🗑️ Yes, Delete Permanently
+                </button>
+                <a href="{% url 'vocab-detail' vocab.pk %}" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

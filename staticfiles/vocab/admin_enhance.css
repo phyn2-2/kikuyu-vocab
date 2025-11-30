@@ -1,0 +1,35 @@
+/* Vocab Admin Enhancements */
+
+/*Make the changelist more compact and readable*/
+#changelist .results {
+    font-size: 13px;
+}
+
+/* Style the audio player */
+audio {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* Better spacing for inline comments */
+.inline-related {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(139,92, 246, 0.05);
+    border-radius: 6px;
+}
+
+/*Highlight pending entries */
+tr[class*="status-pending"] {
+    background: rgba(245, 158, 11, 0.1) !important;
+}
+
+/* Highlight approved entries */
+tr[class*="status-approved"] {
+    background: rgba(16, 185, 129, 0.05) !important;
+}
+
+/* Highlight rejected entries */
+tr[class*="status-rejected"] {
+    background: rgba(239, 68, 68, 0.05) !important;
+}
+

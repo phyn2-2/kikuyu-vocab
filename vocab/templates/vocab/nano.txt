@@ -1,0 +1,150 @@
+--Cancer has become a big threat to mankind worldwide. This disease is the second most common disease with maximum mortality.
+--using nanoparticles for their delivery. It enhances the permeability and retention onto the tumor cells and not onto healthy cells. It also helps in delivering the slow and controlled release to the targeted cells. Drug carriers in nanoscale offer the chances of enhancing the therapeutic index of drug molecules by diminishing their toxicity against physiological tissues and achieving controlled therapeutic levels of the drug for a long time. It would minimize the concentration of drug intake and maximize the overall profile of absorption, biodistribution, metabolism, and excretion (ADME) profile.
+--Nanomedicine’ is defined as submicron size (<1um)
+   modules, used for treatment, diagnosis, monitoring, and
+    control of biological system. 1 ‘Nanotechnology’ is the
+    synergy of mechanical, material sciences, microelectronics,
+     electrical, chemical and biological screening
+--Nanotechnology was first discovered by Richard Feynman
+in 1959 (Nobel Laureate in physics, 1956) 
+-Nanotechnology is one of the most popular areas of
+scientific research, especially with regard to medical
+applications. Some of the new detection methods that
+should bring about, faster and less invasive cancer
+diagnoses, but once the diagnosis occur, there's still the
+prospect of surgery, chemotherapy or radiation treatment to
+destroy the cancer.
+--Chemotherapy can cause a variety
+of ailments, including hair loss, digestive problems, nausea
+and lack of energy and mouth ulcers. 10 But
+nanotechnologists think they have an answer for treatment
+as well, and it comes in the form of targeted drug therapies.9
+--Scientists can load their cancer-detecting gold nanoparticles
+with anticancer drugs; they could attack the cancer exactly
+where it lives. Such a treatment means fewer side effects
+and less medication used. Nanoparticles also carry the
+potential for targeted and time-release drugs. A potent dose
+of drugs could be delivered to a specific area but engineered
+to release over a planned period to ensure maximum
+effectiveness and the patient's safety.
+--The small size of nanoparticles endows them with
+properties that can be very useful in oncology, particularly
+in imaging. Quantum dots (nanoparticles with quantum
+confinement properties, such as size-tunable light
+emission), when used in conjunction with MRI (magnetic
+resonance imaging), can produce exceptional images of
+tumor sites. These nanoparticles are much brighter than
+organic dyes and only need one light source for excitation.
+This means that the use of fluorescent quantum dots could
+produce a higher contrast image and at a lower cost than
+todays organic dyes used as contrast media. 
+---With molecular machines, there will be more direct repairs.
+Cell repair will utilize the same tasks that living systems
+already prove possible. Access to cells is possible because
+biologists can insert needles into cells without killing them.
+Thus, molecular machines are capable of entering the cell. 
+---One-dimensional (1-D) nanomaterials possess unique shape-dependent phyicochemical properties and are increasingly recognized as promising materials for nanotechnology. 1-D nanomaterials can be classified according to their shape, such as nanorods, nanotubes, nanowires, self-assembled nanochains,
+--- The biological characteristics of 1-D nanomaterials, including high drug loading efficiency, prolonged blood circulation, the ability to capture cancer cells, unique cellular uptake mechanisms, efficient photothermal conversion, and material tunability, have aided in extending their potential to biomedical applications, particularly in cancer therapy and diagnosis. 
+--The application of nanomaterial has been extensively studied and explored as chemical biology tools in cancer theranostics. It shows greater applications toward stability, biocompatibility, and increased cell permeability, resulting in precise targeting, and mitigating the shortcomings of traditional cancer therapies.
+--Chemotherapy, radiotherapy, and surgical intervention are the first-line cancer treatments, (6) and they have continued to be the most effective methods for cancer treatment for the last several decades. Still, they have not been able to cure the disease entirely and have important limitations including low tumor selectivity, systemic toxicity, off-target toxicity, multidrug resistance, and serious adverse effects on human health.
+--Effective and personalized treatment plans incorporating cancer diagnostic and therapeutic approaches are required to achieve excellent clinical results. Afterward, monoclonal antibody based therapy has been explored by utilizing tumor-specific antigens (TSAs) and tumor-associated antigens (TAAs). (9) Antibody–drug conjugates (ADCs) are biopharmaceutical drugs designed for targeted cancer therapy and sparing healthy cells. This approach has also paved the way from the bench side to the bedside in a majestic way. (10) Despite the substantial progress of these techniques, the aforementioned techniques have their own advantages and disadvantages.
+--Nanotheranostics harnesses the capabilities of nanotechnology; due to their small size and leaky tumor vascularization, nanosystems can preferentially aggregate in tumor cells and exhibit enhanced therapeutic efficacy and diagnostic capability. Additionally, these nanoparticles (NPs) can be redirected and reoriented in a variety of ways while carrying the medicines on them. (12,13) The emerging area of nanotechnology brings the concept of nanotherapeutics, and this technique has proved very promising in cancer treatment. Nanotechnology has been considered as the engineering of the molecule at the nanoscale level, which endows high drug loading capabilities due to high external surface area. (14) Moreover, owing to the small size which is comparable with the biological system, nanomaterials actively interact with cellular components of the cell and show promising application in both in vivo and in vitro biomedical applications.
+---Drug resistance and tumor heterogeneity remain significant obstacles to effective therapy for cancer. Early and precise cancer detection is essential for the most potent therapeutic benefit after intervention. (21) These critical aspects of the disease should be addressed by effective cancer treatment. A treatment that combines focused therapy based on precise diagnostic test results is known as theranostics, an emerging discipline of medicine. (22) Hence, strategies combining simultaneous diagnosis and treatment are known as theranostics, enabling simultaneous target detection, drug distribution tracking, and therapeutic response evaluation to produce personalized medicine. (23) As per Warner, (24) theranostics is diagnosis along with therapy, which means it is an integrated approach that provides therapy, diagnosis, and monitoring through imaging.
+---Liposomes. Liposomes are nanoconstructs (approximately 100 nm in diameter) with bilayered membrane structures composed of phospholipids with hydrophilic heads and hydrophobic anionic or cationic long-chain tails (Fig. 1A).(10) Their aqueous reservoir allows for encapsulation of a wide variety of hydrophilic agents, including drugs and siRNA.(11) Moreover, the hydrophobic membrane can encapsulate hydrophobic drug molecules and prevent leakage of hydrophilic agents from within the core. In 1995, the FDA approved the use of a PEGylated liposomal formulation of doxorubicin (Doxil) for the treatment of Kaposi’s sarcoma.(12,13) The platform resulted in significantly decreased cardiotoxicity and increased the circulation half-life of doxorubicin from 10 min to 50 h.(14) In a study by SEQUUS Pharmaceuticals, 53 patients with advanced Kaposi’s sarcoma were administered liposomal doxorubicin once every 3 weeks, with 19 patients showing a partial response and one experiencing a complete response.(15) The success of liposomal doxorubicin paved the way for several other liposomal formulations currently in various phases of clinical trials. LErafAON is a liposomal formulation containing the raf antisense oligonucleotide that inhibits c-raf, a protein that leads to resistance to radiation and chemotherapy.(16) In a phase I trial in patients with advanced solid tumors undergoing radiation therapy, four of 12 evaluable patients exhibited a partial response, while four showed stable disease. Three of five evaluable patients exhibited c-raf-1 mRNA inhibition and four of five exhibited Raf-1
+----Quantum dots (QDs) are semiconductor nanocrystals that emit fluorescence on excitation with a light source. They have excellent optical properties, including high brightness, resistance to photobleaching and tunable wavelength
+---QDs with near-infrared emission could be applied to sentinel lymph-node mapping to aid biopsy and surgery
+---Conjugation of QDs with biomolecules, including peptides and antibodies, could be used to target tumors in vivo.
+---
+Photothermal therapy (PTT), in which nanoparticles embedded within tumors generate heat in response to exogenously applied laser light, has been well documented as an independent strategy for highly selective cancer treatment. Gold-based nanoparticles are the main mediators of PTT because they offer: (1) biocompatibility, (2) small diameters that enable tumor penetration upon systemic delivery, (3) simple gold-thiol bioconjugation chemistry for the attachment of desired molecules, (4) efficient light-to-heat conversion, and (5) the ability to be tuned to absorb near-infrared light, which penetrates tissue more deeply than other wavelengths of light. In addition to acting as a standalone therapy, gold nanoparticle-mediated PTT has recently been evaluated in combination with other therapies, such as chemotherapy, gene regulation, and immunotherapy, for enhanced anti-tumor effects. When delivered independently, the therapeutic success of molecular agents is hindered by premature degradation, insufficient tumor delivery, and off-target toxicity. PTT can overcome these limitations by enhancing tumor- or cell-specific delivery of these agents or by sensitizing cancer cells to these additional therapies. All together, these benefits can enhance the therapeutic success of both PTT and the secondary treatment while lowering the required doses of the individual agents, leading to fewer off-target effects. Given the benefits of combining gold nanoparticle-mediated PTT with other treatment strategies, many exciting opportunities for multimodal cancer treatment are emerging that will ultimately lead to improved patient outcomes. WIREs Nanomed Nanobiotechnol 2017, 9:e1449. doi: 10.1002/wnan.1449
+---Nanoparticle-mediated PTT has been rapidly
+developing as a standalone therapy for cancer
+because it enables selective hyperthermia of tumor
+tissue while avoiding damage to healthy tissue. In
+PTT, plasmonic nanoparticles (NPs) are delivered
+into tumors and are irradiated with laser light, which
+causes the NPs’ conduction band electrons to
+undergo synchronized oscillations that result in either
+the absorption or scattering of the applied light.1 The
+absorbed light is converted into heat, which irreversibly damages the surrounding diseased tissue
+(Figure 1(a)). While NPs made of various materials
+can be employed for PTT,2–4 gold-based nanoparticles (AuNPs), which we define here as those consisting either entirely or partially of gold (such as silica
+core/gold shell ‘nanoshells’), have emerged as the lead
+therapeutic platform because they offer several major
+benefits. First, AuNPs enable simple gold-thiol bioconjugation chemistry for surface functionalization
+with therapeutic molecules, targeting ligands, or
+-----AuNP-mediated PTT has been thoroughly investigated as a standalone therapy for cancer, but its
+recent use in combination with other imaging and
+treatment modalities presents improved therapeutic
+results. AuNPs are ideal photothermal transducers
+because their optical properties can be tuned by
+adjusting their structural dimensions so that they
+strongly absorb tissue-penetrating NIR light. Further, AuNPs provide several essential features for
+use in multimodal therapies including simple goldthiol bioconjugation chemistry and efficient tumor
+accumulation and cellular uptake. PTT can exploit
+these qualities of AuNPs to provide controlled
+release of conjugated or encapsulated molecules
+specifically at diseased sites. Additionally, AuNPmediated PTT can sensitize cancer cells to chemotherapy, gene regulation, and immunotherapy by
+increasing cell permeability and intracellular delivery. Controlled release and hyperthermia-induced
+sensitization can lower the required therapy dosages
+and increase localized efficacy. Lastly, PTT can
+modulate cellular apoptosis or necrosis depending
+on the laser power and resultant temperature
+reached during irradiation. The mechanism of cell
+death is important because necrotic cells can promote secondary tumor growth, while apoptotic cells
+may elicit an immune response to decrease the formation of secondary tumors. Therefore, it is critical
+to understand the mechanism of cell death to optimally design multimodal cancer therapies. Owing to
+the extensive synergy between hyperthermia and
+other treatment modalities, it is likely that AuNPmediated PTT will become a hallmark of multifunctional cancer therapies.
+-----Gold nanorods (GNRs), which strongly absorb near-infrared (NIR) light, have shown great potential in fields of biomedical application. These include photothermal therapy, molecular imaging, biosensing, and gene delivery, especially for the treatment of diseased tissues such as cancer. These biomedical applications of GNRs arise from their various useful properties; photothermal (nanoheater) properties, efficient large scale synthesis, easy functionalization, and colloidal stability. In addition, GNRs do not decompose and have an enhanced scattering signal and tunable longitudinal plasmon absorption which allow them to be used as a stable contrast agent. Therefore, GNRs are also promising theranostic agents, combining both tumor diagnosis and treatment. In this review, we discuss the recent progress of in vitro and in vivo explorations of the diagnostic and therapeutic applications of GNRs as a component of cancer therapy.
+----During the last decade, there have been significant
+improvements in diagnostic modalities as well as
+treatments of cancer due to advances in nanoscience
+and nanotechnology. General cancer treatments such
+as radiation therapy, chemotherapy, and surgical
+removal often result in the death of the surrounding
+healthy tissues because of their significant toxic
+effects
+------Au nanoparticles possess optical
+properties such as strong absorption and scattering in
+the visible–near-infrared (VIS–NIR) region depending
+on their size and shape.4
+-----GNRs are unique nanomaterials that exhibit desirable physical, chemical, electronic, and optical properties for potential applications in medical diagnosis
+and therapeutic treatments. In particular, the NIR
+light-induced hyperthermic properties of GNRs are
+attractive as a modality to treat diseased cells or tissues. Easy and large scale synthesis and controlled
+tunability of absorption spectrum make GNRs a more
+attractive hyperthermia agent as well as a multimodal
+imaging agent. GNRs can be imaged using several
+well-established imaging techniques and they showed
+show better performance than organic imaging agents
+or quantum dots. In spite of these promising features,
+there are still many issues that need to be addressed
+in order for GNRs to be used for biomedical
+applications. The major concern regarding clinical
+application of GNRs is the toxicity associated with
+remaining CTAB. It will be important to optimize the
+surface modification of GNRs to reduce CTAB toxicity or to discover a new method of producing biocompatible GNRs. Some reports suggest that a coating
+of polymers, proteins, lipids, or silica on GNRs reduces
+their toxicity significantly. Alternatively, encapsulation
+of GNRs inside functional nano-carriers can improve
+their biocompatibility and the efficiency of targeted
+delivery. So far most of the toxicity data of GNRs have
+been obtained from in vitro cell studies. Thus, it is
+necessary to obtain more in vivo toxicological data (i.e.,
+immune or acute inflammatory response) of GNRs
+using established animal models. Apart from the toxicity concern, there are several other issues which need
+careful attention, including, for example, the stability
+of GNRs, their blood retention after in vivo administration, tissue distribution, and metabolism. Surface
+functionalization may play a key role in determining
+the fate of in vivo GNRs. Functionalization of polymers like PEG improves the half-life of GNRs in blood
+circulation and the conjugation of targeting agents
+(e.g., folic acid, RGD peptide, antibodies, etc) helps
+them to accumulate more in target tissues. It will also
+------“Theranostics” is a combination of diagnostic and local treatment of lesions.1-5 It has the potential to change the current medical paradigm of “see and treat” to “detect and inhibit”. Magnetic nanoparticles can potentially achieve the theranostics combining magnetic resonance imaging (MRI) and magnetic hyperthermia treatment (MHT) because they not only shorten the transverse relaxation time (T2) of protons and lead to a darkening in the reconstructed image, but also generate heat by the application of alternating current (AC) magnetic fields.6-9
+
+MRI is a diagnostic imaging modality and provides anatomical information.10-13 Superparamagnetic iron oxide nanoparticles (SPIONs) are used as negative contrast agents for MRI, but their application is limited mainly to the detection of liver cancer. Therefore, MRI contrast agents for the detection of non-liver cancer have been studied. In the development of MRI contrast agents, ensuring safety is the primary issue. In this regard, SPION-based materials are promising as MRI contrast agents because SPIONs are already used in clinical practice and are believed to be non-toxic.
+
+MRI contrast agents are also required to have high relaxivity (r2 = T2-1) for shortening the T2 effectively. Experiments have shown that the clustering of SPIONs is an effective approach for increasing r2 dramatically.14-16 Moreover, cancer tissues and necrotic tissues are distributed heterogeneously within the tumor. Therefore, confirmation as to whether MRI contrast agents are located in cancer tissues should be sought.
+
+MHT is a promising cancer thermotherapy because magnetic materials produce heat under AC magnetic fields.17 MHT enables the local treatment of tumors without damage to normal tissue because tumors are not only susceptible to heat but are also readily heated compared with normal tissue. The number of surviving cancer cells decrease gradually below 42°C, but decrease rapidly above 42°C. Numerous in vitro studies on MHT have been reported, but few in vivo studies gave been conducted.18-20 In vivo studies on MHT have hitherto been carried out by direct injection of magnetic nanoparticles into the tumor, which is not particularly practical. MHT involving intravenous injection of magnetic nanoparticles has practical advantages. Furthermore, this type of MHT can be carried out directly after MRI.
+
