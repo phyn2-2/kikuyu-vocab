@@ -17,7 +17,8 @@ from .forms import VocabForm, CommentForm
 class VocabListView(ListView):
     model = Vocab
     template_name = 'vocab/vocab_list.html'
-    context_object_name = 20
+    context_object_name = 'vocabs'
+    paginate_by = 20
 
     def get_queryset(self):
         """Returns filtered and searched vocabulary entries.
@@ -40,35 +41,35 @@ class VocabListView(ListView):
                 Q(tags__name__icontains=search_query)
             ).distinct()    # distinct() prevents duplicates from tags
 
-            # FILTER by category
-            category_slug = self.request.GET.get('category')
-            if category_slug:
-                queryset = queryset.filter(category__slug=category_slug)
+        # FILTER by category
+        category_slug = self.request.GET.get('category')
+        if category_slug:
+            queryset = queryset.filter(category__slug=category_slug)
 
-            # FILTER by difficulty
-            difficulty = self.request.GET.get('difficulty')
-            if difficulty in ['beginner', 'intermediate', 'advanced']:
-                queryset = queryset.filter(difficulty=difficulty)
+        # FILTER by difficulty
+        difficulty = self.request.GET.get('difficulty')
+        if difficulty in ['beginner', 'intermediate', 'advanced']:
+            queryset = queryset.filter(difficulty=difficulty)
 
-            # FILTER by language
-            language = self.request.GET.get('language')
-            if language in ['kikuyu', 'english', 'swahili']:
-                queryset = queryset.filter(language=language)
+        # FILTER by language
+        language = self.request.GET.get('language')
+        if language in ['kikuyu', 'english', 'swahili']:
+            queryset = queryset.filter(language=language)
 
-            # SORT options
-            sort = self.request.GET.get('sort', '-created_at')
-            if sort == 'popular':
-                # Sort by view count
-                queryset = queryset.order_by('-view_count')
-            elif sort == 'alphabetical':
-                queryset =queryset.order_by('word')
-            elif sort == 'oldest':
-                queryset = queryset.order_by('created_at')
-            else:
-                # Default: newest first
-                queryset = queryset.order_by('created_at')
+        # SORT options
+        sort = self.request.GET.get('sort', '-created_at')
+        if sort == 'popular':
+            # Sort by view count
+            queryset = queryset.order_by('-view_count')
+        elif sort == 'alphabetical':
+            queryset =queryset.order_by('word')
+        elif sort == 'oldest':
+            queryset = queryset.order_by('created_at')
+        else:
+            # Default: newest first
+            queryset = queryset.order_by('created_at')
 
-            return queryset
+        return queryset
 
     def get_context_data(self, **kwargs):
         """Add extra data to template context."""
