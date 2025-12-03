@@ -4,47 +4,26 @@ __pycache__/
 *$py.class
 *.pyc
 *.pyo
-*.pyd
 .Python
 env/
 venv/
 myenv/
 ENV/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
 
 # Django
 *.log
-local_settings.py
 db.sqlite3
 db.sqlite3-journal
 /media
 /staticfiles
 .env
-*.pot
 
 # IDE
 .vscode/
 .idea/
 *.swp
-*.swo
 *~
+
+# OS
 .DS_Store
 Thumbs.db
-
-# Secrets
-secrets.py
-.env.local
