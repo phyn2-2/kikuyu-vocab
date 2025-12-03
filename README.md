@@ -37,7 +37,7 @@ Custom **deep purple theme** with dark web aesthetic:
 ### Installation
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/kikuyu-vocab-platform.git
+git clone https://github.com/phyn2-2/kikuyu-vocab-platform.git
 cd kikuyu-vocab-platform
 
 # Create virtual environment
@@ -159,10 +159,9 @@ MIT License - See LICENSE file
 
 ## 👤 Author
 
-**Your Name**
-- Portfolio: [yourwebsite.com]
-- GitHub: [@yourusername]
-- Email: your.email@example.com
+**Baphyn Magero**
+- GitHub: [phyn2-2]
+- Email: baphynmeshack85@gmail.com
 
 ---
 
