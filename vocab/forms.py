@@ -100,7 +100,7 @@ class VocabForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """Initialize form and populate tag field if editing."""
-        super().__init__(*args, *kwargs)
+        super().__init__(*args, **kwargs)
 
         # If editing existing entry, populate tags
         if self.instance.pk:
@@ -198,7 +198,7 @@ class CommentForm(forms.ModelForm):
             'content': 'Your Comment'
         }
 
-    def cleaned_content(self):
+    def clean_content(self):
         """Validate comment content"""
         content = self.cleaned_data.get('content', '').strip()
 
