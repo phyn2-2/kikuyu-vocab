@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.db.models import Q, Count, Prefetch
 from django.urls import reverse_lazy
@@ -211,7 +212,7 @@ class VocabUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         """Reset status to pending when edited"""
         # If word was rejected and now edited, reset to pending
         if self.object.status == 'rejected':
-            form.instance.status == 'pending'
+            form.instance.status = 'pending'
             form.instance.reviewed_by = None
             form.instance.reviewed_at = None
             form.instance.rejection_reason = ''
@@ -346,6 +347,12 @@ class MyVocabListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):
+        """Show only current user's entries"""
+        return Vocab.objects.filter(
+            user=self.request.user
+        ).select_related('category').order_by('-created_at')
+
+    def get_context_data(self, **kwargs):
         """Add Statistics about users's contributions"""
         context = super().get_context_data(**kwargs)
         user_vocabs = Vocab.objects.filter(user=self.request.user)
